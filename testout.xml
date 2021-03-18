@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="dp2-student" name="it.polito.dp2.TAMELESS.sol.tests.TamTests" skipped="0" tests="18" time="6.475" timestamp="2020-03-30T18:41:28">
+  <properties>
+    <property name="my.java.library.path" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/server:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/../lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/client:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386::/usr/java/packages/lib/i386:/lib:/usr/lib:/usr/lib/swi-prolog/lib/i686-linux" />
+    <property name="env.DESKTOP_SESSION" value="xfce" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="java.home" value="/usr/lib/jvm/jdk1.8.0_141/jre" />
+    <property name="custom.dir" value="/home/dp2/Desktop/TAMELESS/custom" />
+    <property name="sol.build.filepath" value="/home/dp2/Desktop/TAMELESS/sol_build.xml" />
+    <property name="env.QT_LINUX_ACCESSIBILITY_ALWAYS_ON" value="1" />
+    <property name="env.GDM_LANG" value="en_US" />
+    <property name="TAMELESS.location" value="/home/dp2/Desktop/TAMELESS" />
+    <property name="env.DISPLAY" value=":0.0" />
+    <property name="debug" value="true" />
+    <property name="env.XDG_VTNR" value="7" />
+    <property name="Neo4JURL" value="http://localhost:7474/db" />
+    <property name="java.awt.headless" value="true" />
+    <property name="env.GLADE_CATALOG_PATH" value=":" />
+    <property name="env.XDG_GREETER_DATA_DIR" value="/var/lib/lightdm-data/dp2" />
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/endorsed" />
+    <property name="env.LOGNAME" value="dp2" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="src.dir" value="/home/dp2/Desktop/TAMELESS/src" />
+    <property name="env.XDG_SEAT" value="seat0" />
+    <property name="env.LC_PAPER" value="it_IT.UTF-8" />
+    <property name="env.SESSION_MANAGER" value="local/dp2-student:@/tmp/.ICE-unix/1658,unix/dp2-student:/tmp/.ICE-unix/1658" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="sol.build.file" value="sol_build.xml" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="env.XDG_SEAT_PATH" value="/org/freedesktop/DisplayManager/Seat0" />
+    <property name="env.MANDATORY_PATH" value="/usr/share/gconf/xfce.mandatory.path" />
+    <property name="java.version" value="1.8.0_141" />
+    <property name="eclipse.pdebuild.home" value="/home/dp2/Software/eclipse/plugins/org.eclipse.pde.build_3.9.200.v20160204-0642/.//" />
+    <property name="gen.war.dir" value="/home/dp2/Desktop/TAMELESS/war" />
+    <property name="env.OXYGEN_DISABLE_INNER_SHADOWS_HACK" value="1" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.LANGUAGE" value="en_US" />
+    <property name="env.GDK_SCALE" value="1" />
+    <property name="env.XDG_MENU_PREFIX" value="xfce-" />
+    <property name="ant.project.invoked-targets" value="runFuncTest.real" />
+    <property name="env.XDG_DATA_DIRS" value="/usr/share/xfce:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share" />
+    <property name="env.GNOME_KEYRING_CONTROL" value="" />
+    <property name="env.UPSTART_SESSION" value="unix:abstract=/com/ubuntu/upstart-session/1000/1402" />
+    <property name="user.name" value="dp2" />
+    <property name="env.LANG" value="en_US.UTF-8" />
+    <property name="env.LC_MONETARY" value="it_IT.UTF-8" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="env.DBUS_SESSION_BUS_ADDRESS" value="unix:abstract=/tmp/dbus-M8gvUIk7Tv" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="env.LC_NAME" value="it_IT.UTF-8" />
+    <property name="lib.dir" value="/home/dp2/Desktop/TAMELESS/lib" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="env.GLADE_PIXMAP_PATH" value=":" />
+    <property name="user.timezone" value="" />
+    <property name="neo4j.location" value="/opt/neo4j-community-3.2.3" />
+    <property name="path.separator" value=":" />
+    <property name="tomcatUsername" value="root" />
+    <property name="env.XMODIFIERS" value="" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="PORT" value="8080" />
+    <property name="ant.project.default-target" value="package-service" />
+    <property name="env.HOME" value="/home/dp2" />
+    <property name="catalina.home.bin.dir" value="/opt/tomcat/apache-tomcat-8.5.20/bin" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner it.polito.dp2.TAMELESS.sol.tests.TamTests methods=testCreateEntities, testCreateThreats, testCreateRelation2Entities, testCreateRelation3Entities,      testCreateRelation2Entities1Threat, testCreateRelation1Entity1Threat, testCreateProperty1Entity1Threat,     testCreateProperty1Entity, testUpdateEntity, testUpdateThreat, testUpdateRelation2Entities,      testUpdateRelation3Entities, testUpdateRelation2Entities1Threat, testUpdateRelation1Entity1Threat,     testUpdateProperty1Entity, testUpdateProperty1Entity1Threat, testCreateDerivedProperty1Entity, testCreateDerivedProperty1Entity1Threat skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/dp2/Desktop/TAMELESS/testout.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=/home/dp2/Desktop/TAMELESS/junitvmwatcher2862021523460056037.properties propsfile=/home/dp2/Desktop/TAMELESS/junit3257360230980961153.properties" />
+    <property name="tomcatUrl" value="http://localhost:8080/manager/text" />
+    <property name="ant.file" value="/home/dp2/Desktop/TAMELESS/build.xml" />
+    <property name="env.LC_TELEPHONE" value="it_IT.UTF-8" />
+    <property name="env.GTK2_MODULES" value="overlay-scrollbar" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="env.LC_IDENTIFICATION" value="it_IT.UTF-8" />
+    <property name="env.GNOME_KEYRING_PID" value="" />
+    <property name="user.language" value="en" />
+    <property name="env.UPSTART_EVENTS" value="started xsession" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="target" value="1.8" />
+    <property name="server.location" value="/opt/tomcat/apache-tomcat-8.5.20" />
+    <property name="env.SSH_AGENT_PID" value="1717" />
+    <property name="it.polito.dp2.TAMELESS.ass.ClientFactory" value="it.polito.dp2.TAMELESS.sol.client.ClientFactory" />
+    <property name="env.CLUTTER_IM_MODULE" value="" />
+    <property name="env.GLADE_MODULE_PATH" value=":" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="source" value="1.8" />
+    <property name="webContent.dir" value="/home/dp2/Desktop/TAMELESS/WebContent" />
+    <property name="gen.tomcat.service.dir" value="/home/dp2/Desktop/TAMELESS/target" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.tomcat-build" value="/home/dp2/Desktop/TAMELESS/tomcat-build.xml" />
+    <property name="root.location" value="/home/dp2/Desktop/TAMELESS" />
+    <property name="env.LC_MEASUREMENT" value="it_IT.UTF-8" />
+    <property name="env.IM_CONFIG_PHASE" value="1" />
+    <property name="ant.file.neo4j-build" value="/home/dp2/Desktop/TAMELESS/neo4j-build.xml" />
+    <property name="env.LC_TIME" value="it_IT.UTF-8" />
+    <property name="env.GDMSESSION" value="xfce" />
+    <property name="eclipse.pdebuild.templates" value="/home/dp2/Software/eclipse/plugins/org.eclipse.pde.build_3.9.200.v20160204-0642/templates//" />
+    <property name="shared.location" value="/opt/dp2/shared" />
+    <property name="env.QT_ACCESSIBILITY" value="1" />
+    <property name="env.XDG_SESSION_DESKTOP" value="xfce" />
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob" />
+    <property name="env.DEFAULTS_PATH" value="/usr/share/gconf/xfce.default.path" />
+    <property name="env.GDK_CORE_DEVICE_EVENTS" value="1" />
+    <property name="ant.file.type.TAMELESS" value="file" />
+    <property name="catalina.home" value="/opt/tomcat/apache-tomcat-8.5.20/bin/.." />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+    <property name="env.XDG_SESSION_TYPE" value="x11" />
+    <property name="it.polito.dp2.TAMELESS.ass.PORT" value="8080" />
+    <property name="env.XDG_SESSION_PATH" value="/org/freedesktop/DisplayManager/Session0" />
+    <property name="env.JOB" value="dbus" />
+    <property name="os.name" value="Linux" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.file.type.catalina-tasks" value="file" />
+    <property name="ant.file.type.neo4j-build" value="file" />
+    <property name="java.vm.name" value="Java HotSpot(TM) Server VM" />
+    <property name="env.QT_IM_MODULE" value="" />
+    <property name="java.library.path" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/server:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/../lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/client:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386::/usr/java/packages/lib/i386:/lib:/usr/lib" />
+    <property name="env.PATH" value="/home/dp2/bin:/home/dp2/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/tomcat/apache-tomcat-8.5.20/bin:/usr/lib/jvm/jdk1.8.0_141/bin:/opt/apache-ant-1.9.13/bin:/snap/bin" />
+    <property name="eclipse.pdebuild.scripts" value="/home/dp2/Software/eclipse/plugins/org.eclipse.pde.build_3.9.200.v20160204-0642/scripts//" />
+    <property name="ant.java.version" value="1.8" />
+    <property name="basedir" value="/home/dp2/Desktop/TAMELESS" />
+    <property name="java.class.version" value="52.0" />
+    <property name="env.SHLVL" value="0" />
+    <property name="env.LD_LIBRARY_PATH" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/server:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/../lib/i386:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386/client:/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386:" />
+    <property name="ext.lib.dir" value="/opt/dp2/shared/lib" />
+    <property name="sol.zip" value="tam.zip" />
+    <property name="ant.home" value="/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327" />
+    <property name="env.UPSTART_JOB" value="startxfce4" />
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/i386" />
+    <property name="build.dir" value="/home/dp2/Desktop/TAMELESS/build" />
+    <property name="sun.management.compiler" value="HotSpot Tiered Compilers" />
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
+    <property name="env.USER" value="dp2" />
+    <property name="env.GTK_IM_MODULE" value="" />
+    <property name="env.GTK_MODULES" value="gail:atk-bridge" />
+    <property name="ant.file.catalina-tasks" value="/opt/tomcat/apache-tomcat-8.5.20/bin/catalina-tasks.xml" />
+    <property name="ant.project.name" value="TAMELESS" />
+    <property name="env.SESSIONTYPE" value="" />
+    <property name="java.vm.specification.version" value="1.8" />
+    <property name="it.polito.dp2.TAMELESS.ass.URL" value="http://localhost:8080/TAMELESS/rest" />
+    <property name="env.NLSPATH" value="/usr/dt/lib/nls/msg/%L/%N.cat" />
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit" />
+    <property name="doc.dir" value="/home/dp2/Desktop/TAMELESS/doc" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="java.ext.dirs" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/ext:/usr/java/packages/lib/ext" />
+    <property name="os.version" value="4.15.0-34-generic" />
+    <property name="env.QT_QPA_PLATFORMTHEME" value="appmenu-qt5" />
+    <property name="user.home" value="/home/dp2" />
+    <property name="env.XDG_CURRENT_DESKTOP" value="XFCE" />
+    <property name="test.class" value="it.polito.dp2.TAMELESS.sol.tests.TamTests" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="env.SESSION" value="xfce" />
+    <property name="env.JAVA_HOME" value="/usr/lib/jvm/jdk1.8.0_141" />
+    <property name="env.XDG_SESSION_ID" value="c2" />
+    <property name="env.XAUTHORITY" value="/home/dp2/.Xauthority" />
+    <property name="user.dir" value="/home/dp2/Desktop/TAMELESS" />
+    <property name="env.XFILESEARCHPATH" value="/usr/dt/app-defaults/%L/Dt" />
+    <property name="env.PWD" value="/home/dp2" />
+    <property name="env.LIBOVERLAY_SCROLLBAR" value="0" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="tomcatPort" value="8080" />
+    <property name="java.vm.version" value="25.141-b15" />
+    <property name="java.class.path" value="/home/dp2/Desktop/TAMELESS/build:/home/dp2/Desktop/TAMELESS/lib/BIB.jar:/home/dp2/Desktop/TAMELESS/lib/hamcrest-core-1.3.jar:/home/dp2/Desktop/TAMELESS/lib/junit-4.12.jar:/home/dp2/Desktop/TAMELESS/lib/swagger-annotations-1.5.0.jar:/home/dp2/Desktop/TAMELESS/lib/swagger-core-1.5.0.jar:/home/dp2/Desktop/TAMELESS/lib/swagger-jaxrs-1.5.0.jar:/home/dp2/Desktop/TAMELESS/lib/swagger-jersey2-jaxrs-1.5.0.jar:/home/dp2/Desktop/TAMELESS/lib/swagger-models-1.5.0.jar:/opt/dp2/shared/lib/activation-1.1.jar:/opt/dp2/shared/lib/annotations-2.0.1.jar:/opt/dp2/shared/lib/aopalliance-repackaged-2.5.0-b32.jar:/opt/dp2/shared/lib/codemodel-2.6.jar:/opt/dp2/shared/lib/commons-lang-2.6.jar:/opt/dp2/shared/lib/commons-lang3-3.2.1.jar:/opt/dp2/shared/lib/comresrcgen-1.0.jar:/opt/dp2/shared/lib/gson-2.2.4.jar:/opt/dp2/shared/lib/guava-15.0.jar:/opt/dp2/shared/lib/hk2-api-2.5.0-b32.jar:/opt/dp2/shared/lib/hk2-locator-2.5.0-b32.jar:/opt/dp2/shared/lib/hk2-utils-2.5.0-b32.jar:/opt/dp2/shared/lib/istack-commons-runtime-2.21.jar:/opt/dp2/shared/lib/istack-commons-tools-2.21.jar:/opt/dp2/shared/lib/jackson-annotations-2.4.0.jar:/opt/dp2/shared/lib/jackson-core-2.4.2.jar:/opt/dp2/shared/lib/jackson-core-asl-1.9.11.jar:/opt/dp2/shared/lib/jackson-databind-2.4.2.jar:/opt/dp2/shared/lib/jackson-dataformat-xml-2.4.2.jar:/opt/dp2/shared/lib/jackson-dataformat-yaml-2.4.2.jar:/opt/dp2/shared/lib/jackson-datatype-joda-2.4.2.jar:/opt/dp2/shared/lib/jackson-jaxrs-base-2.4.2.jar:/opt/dp2/shared/lib/jackson-jaxrs-json-provider-2.4.2.jar:/opt/dp2/shared/lib/jackson-mapper-asl-1.9.11.jar:/opt/dp2/shared/lib/jackson-module-jaxb-annotations-2.4.2.jar:/opt/dp2/shared/lib/javassist-3.20.0-GA.jar:/opt/dp2/shared/lib/javax.annotation-api-1.2.jar:/opt/dp2/shared/lib/javax.inject-2.5.0-b32.jar:/opt/dp2/shared/lib/javax.json-1.0.4.jar:/opt/dp2/shared/lib/javax.ws.rs-api-2.0.1.jar:/opt/dp2/shared/lib/jaxb-api-2.2.12-b140109.1041.jar:/opt/dp2/shared/lib/jaxb-core-2.2.11.jar:/opt/dp2/shared/lib/jaxb-runtime-2.2.11.jar:/opt/dp2/shared/lib/jaxb-xjc-2.2.11.jar:/opt/dp2/shared/lib/jersey-client-1.19.1.jar:/opt/dp2/shared/lib/jersey-client-2.25.1.jar:/opt/dp2/shared/lib/jersey-common-2.25.1.jar:/opt/dp2/shared/lib/jersey-container-servlet-2.25.1.jar:/opt/dp2/shared/lib/jersey-container-servlet-core-2.25.1.jar:/opt/dp2/shared/lib/jersey-core-1.19.1.jar:/opt/dp2/shared/lib/jersey-entity-filtering-2.25.1.jar:/opt/dp2/shared/lib/jersey-guava-2.25.1.jar:/opt/dp2/shared/lib/jersey-media-jaxb-2.25.1.jar:/opt/dp2/shared/lib/jersey-media-moxy-2.25.1.jar:/opt/dp2/shared/lib/jersey-media-multipart-2.25.1.jar:/opt/dp2/shared/lib/jersey-server-2.25.1.jar:/opt/dp2/shared/lib/joda-time-2.2.jar:/opt/dp2/shared/lib/jpl.jar:/opt/dp2/shared/lib/json-simple-1.1.jar:/opt/dp2/shared/lib/jsonschema2pojo-core-0.4.0.jar:/opt/dp2/shared/lib/localizer-1.0.jar:/opt/dp2/shared/lib/mimepull-1.9.6.jar:/opt/dp2/shared/lib/org.eclipse.persistence.asm-2.6.0.jar:/opt/dp2/shared/lib/org.eclipse.persistence.core-2.6.0.jar:/opt/dp2/shared/lib/org.eclipse.persistence.moxy-2.6.0.jar:/opt/dp2/shared/lib/osgi-resource-locator-1.0.1.jar:/opt/dp2/shared/lib/reflections-0.9.9.jar:/opt/dp2/shared/lib/rngom-2.2.11.jar:/opt/dp2/shared/lib/slf4j-api-1.6.3.jar:/opt/dp2/shared/lib/stax2-api-3.1.4.jar:/opt/dp2/shared/lib/txw2-2.2.11.jar:/opt/dp2/shared/lib/validation-api-1.1.0.Final.jar:/opt/dp2/shared/lib/wadl-ant-1.1.6.jar:/opt/dp2/shared/lib/wadl-core-1.1.6.jar:/opt/dp2/shared/lib/wadl-xslt-1.1.6.jar:/opt/dp2/shared/lib/xsom-20140925.jar:/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib/ant-launcher.jar:/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib/ant.jar:/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib/ant-junit.jar:/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib/ant-junit4.jar" />
+    <property name="ant.library.dir" value="/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib" />
+    <property name="env.LC_ADDRESS" value="it_IT.UTF-8" />
+    <property name="os.arch" value="i386" />
+    <property name="env.LC_NUMERIC" value="it_IT.UTF-8" />
+    <property name="tomcatPassword" value="root" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="ant.core.lib" value="/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib/ant.jar" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="env.UPSTART_INSTANCE" value="" />
+    <property name="URL" value="http://localhost:8080/TAMELESS/rest" />
+    <property name="file.separator" value="/" />
+    <property name="java.runtime.version" value="1.8.0_141-b15" />
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/jdk1.8.0_141/jre/lib/resources.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/rt.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/sunrsasign.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/jsse.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/jce.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/charsets.jar:/usr/lib/jvm/jdk1.8.0_141/jre/lib/jfr.jar:/usr/lib/jvm/jdk1.8.0_141/jre/classes" />
+    <property name="env.SSH_AUTH_SOCK" value="/tmp/ssh-yzxBTO57o0kV/agent.1712" />
+    <property name="env.QT4_IM_MODULE" value="" />
+    <property name="env.XDG_RUNTIME_DIR" value="/run/user/1000" />
+    <property name="env.XDG_CONFIG_DIRS" value="/etc/xdg/xdg-xfce:/usr/share/upstart/xdg:/etc/xdg:/etc/xdg" />
+    <property name="ant.file.TAMELESS" value="/home/dp2/Desktop/TAMELESS/build.xml" />
+    <property name="env.ANT_HOME" value="/home/dp2/Software/eclipse/plugins/org.apache.ant_1.9.6.v201510161327" />
+    <property name="user.country" value="US" />
+    <property name="env.SHELL" value="/bin/bash" />
+    <property name="env.INSTANCE" value="" />
+    <property name="xsd.dir" value="/home/dp2/Desktop/TAMELESS/xsd" />
+    <property name="service.name" value="TAMELESS" />
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="env.CATALINA_HOME" value="/opt/tomcat/apache-tomcat-8.5.20" />
+    <property name="java.specification.version" value="1.8" />
+    <property name="ant.file.type.tomcat-build" value="file" />
+    <property name="sun.arch.data.model" value="32" />
+  </properties>
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateProperty1Entity1Threat" time="1.05" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateRelation1Entity1Threat" time="0.254" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateRelation2Entities" time="0.227" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateThreats" time="0.1" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateRelation2Entities" time="0.277" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateRelation2Entities1Threat" time="0.436" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateEntity" time="0.077" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateProperty1Entity1Threat" time="0.44" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateThreat" time="0.085" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateRelation1Entity1Threat" time="0.373" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateProperty1Entity" time="0.217" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateRelation2Entities1Threat" time="0.244" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateRelation3Entities" time="0.22" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateRelation3Entities" time="0.401" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testUpdateProperty1Entity" time="0.142" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateDerivedProperty1Entity1Threat" time="0.707" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateDerivedProperty1Entity" time="0.709" />
+  <testcase classname="it.polito.dp2.TAMELESS.sol.tests.TamTests" name="testCreateEntities" time="0.131" />
+  <system-out><![CDATA[property: http://localhost:8080/TAMELESS/rest
+JerseyWebTarget { http://localhost:8080/TAMELESS/rest/system }
+DEBUG: starting testCreatePropertyEntity1Threat
+DEBUG: starting testCreateRelation1Entity1Threat
+DEBUG: starting testCreateRelation2Entities
+DEBUG: starting testCreateThreats
+DEBUG: starting testUpdateRelation2Entities
+DEBUG: starting testUpdateRelation2Entities1Threat
+DEBUG: starting testUpdateEntities
+DEBUG: starting testUpdateProperty1Entity1Threat
+DEBUG: starting testUpdateThreat
+DEBUG: starting testUpdateRelation1Entity1Threat
+DEBUG: starting testCreatePropertyEntity
+DEBUG: starting testCreateRelation2Entities1Threat
+DEBUG: starting testCreateRelation3Entities
+DEBUG: starting testUpdateRelation2Entities
+DEBUG: starting testUpdateProperty1Entity
+DEBUG: starting testCreateDerivedProperty1Entity1Threat
+DEBUG: starting testCreateDerivedProperty1Entity
+DEBUG: starting testCreateEntities
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

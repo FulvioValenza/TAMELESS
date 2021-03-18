@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	    targetNamespace="http://pad.polito.it/dp2/TAMELESS"
+	    xmlns:tns="http://pad.polito.it/dp2/TAMELESS"
+>
+    
+    <xsd:element name="system">
+    	<xsd:complexType>
+    		<xsd:sequence>
+    			<xsd:element name="entity" type="tns:EntityType" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="threat" type="tns:ThreatType" maxOccurs="unbounded"></xsd:element>
+
+    			<xsd:element name="relation2Entities" type="tns:Relation2EntitiesType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="relation3Entities" type="tns:Relation3EntitiesType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="relation2Entities1Threat" type="tns:Relation2Entities1ThreatType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="relation1Entity1Threat" type="tns:Relation1Entity1ThreatType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			
+    			<xsd:element name="assumedProp1Entity" type="tns:AssumedSecurityProp1EntityType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="assumedProp1Entity1Threat" type="tns:AssumedSecurityProp1Entity1ThreatType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			
+    			<xsd:element name="derivedProperty1Entity" type="tns:DerivedSecurityProp1EntityType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    			<xsd:element name="derivedProp1Entity1Threat" type="tns:DerivedSecurityProp1Entity1ThreatType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    		</xsd:sequence>
+    	</xsd:complexType>
+    	
+    			
+		<xsd:unique name="unique_entities_name">
+			<xsd:selector xpath="entity"/>
+			<xsd:field xpath="name"/>
+		</xsd:unique>
+		
+		<xsd:unique name="unique_threats_name">
+			<xsd:selector xpath="threat"/>
+			<xsd:field xpath="name"/>
+		</xsd:unique>
+		
+    	
+    	<xsd:key name="entityKey">
+			<xsd:selector xpath="entity" />
+			<xsd:field xpath="@id" />
+		</xsd:key>
+
+		<!-- NB anche se in realtà il campo entityId si trova in AssumedPropertyType devo comunque usare i nomi di 
+		assumedProp1Entity | assumedProp1Entity1Threat per far funzionare il vincolo nel file xml perchè quelli sono 
+		i nomi degli elementi effettivamente inseriti nel sistema-->
+		
+		<xsd:keyref name="entityReferenceProperties" refer="tns:entityKey">
+			<xsd:selector xpath="assumedProp1Entity | assumedProp1Entity1Threat | derivedProperty1Entity | derivedProp1Entity1Threat" />
+			<xsd:field xpath="entityId"/>
+		</xsd:keyref>
+		<!-- NON posso farlo perchè poi all'interno di "relation" trova entrambi i campi entity 
+		<xsd:keyref name="entityReferenceRelationships1" refer="tns:entityKey">
+			<xsd:selector xpath="relation" />
+			<xsd:field xpath="entity1Id | entity2Id"/>
+		</xsd:keyref> -->
+		
+		<xsd:keyref name="entityReferenceRelationships1" refer="tns:entityKey">
+			<xsd:selector xpath="relation2Entities | relation3Entities | relation2Entities1Threat | relation1Entity1Threat" />
+			<xsd:field xpath="entity1Id"/>
+		</xsd:keyref>
+		<xsd:keyref name="entityReferenceRelationships2" refer="tns:entityKey">
+			<xsd:selector xpath="relation2Entities | relation3Entities | relation2Entities1Threat" />
+			<xsd:field xpath="entity2Id"/>
+		</xsd:keyref>
+		<xsd:keyref name="entityReferenceRelationships3" refer="tns:entityKey">
+			<xsd:selector xpath="relation3Entities" />
+			<xsd:field xpath="entity3Id"/>
+		</xsd:keyref>
+
+		<xsd:key name="threatKey">
+			<xsd:selector xpath="threat" />
+			<xsd:field xpath="@id" />
+		</xsd:key>
+		<xsd:keyref name="threatReferenceProperties" refer="tns:threatKey">
+			<xsd:selector xpath="assumedProp1Entity1Threat | derivedProp1Entity1Threat" />
+			<xsd:field xpath="threatId"/>
+		</xsd:keyref>
+		<xsd:keyref name="threatReferenceRelationships" refer="tns:threatKey">
+			<xsd:selector xpath="relation2Entities1Threat | relation1Entity1Threat" />
+			<xsd:field xpath="threatId"/>
+		</xsd:keyref>
+		
+		<xsd:key name="relationshipKey">
+			<xsd:selector xpath="relation2Entities | relation3Entities | relation2Entities1Threat | relation1Entity1Threat" />
+			<xsd:field xpath="@id" />
+		</xsd:key>
+		
+		<xsd:key name="propertyKey">
+			<xsd:selector xpath="assumedProp1Entity | assumedProp1Entity1Threat" />
+			<xsd:field xpath="@id" />
+		</xsd:key>
+		
+		<xsd:key name="derivedPropertyKey">
+			<xsd:selector xpath="derivedProperty1Entity | derivedProp1Entity1Threat" />
+			<xsd:field xpath="@id" />
+		</xsd:key>
+    </xsd:element>
+    
+    <xsd:complexType name="EntityType">
+    	<xsd:sequence>
+    		<xsd:element name="name" type="xsd:string"></xsd:element> <!-- i.e. cleaning staff,... -->
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:integer" use="required" ></xsd:attribute>
+    	<xsd:attribute name="type" type="tns:EntityNature" use="required" ></xsd:attribute>
+    </xsd:complexType>
+    
+	
+    <xsd:simpleType name="EntityNature">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="human"/>
+    		<xsd:enumeration value="cyber"/>
+    		<xsd:enumeration value="physical"/>
+		</xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:complexType name="ThreatType">
+    	<xsd:sequence>
+    		<xsd:element name="name" type="xsd:string" ></xsd:element> <!-- i.e. unauthorizedAccess -->
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:integer" use="required" ></xsd:attribute>
+    </xsd:complexType>
+        
+        
+   	<xsd:complexType name="AssumedPropertyType">
+   	    <xsd:sequence>
+    		<xsd:element name="entityId" type="xsd:integer"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:integer" use="required" ></xsd:attribute>
+   	</xsd:complexType>
+        
+	<xsd:complexType name="AssumedSecurityProp1EntityType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AssumedPropertyType">
+				<xsd:attribute name="propertyName" type="tns:BasicProperty1EntityName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+        
+  	<xsd:complexType name="AssumedSecurityProp1Entity1ThreatType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AssumedPropertyType">
+				<xsd:sequence>
+		   			<xsd:element name="threatId" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+				<xsd:attribute name="propertyName" type="tns:BasicProperty1Entity1ThreatName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+    
+    <xsd:simpleType name="BasicProperty1EntityName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="malfunctioned"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+   	<xsd:simpleType name="BasicProperty1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="compromised"/>
+    		<xsd:enumeration value="vulnerable"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+   	<xsd:complexType name="RelationType">
+   	    <xsd:sequence>
+    		<xsd:element name="entity1Id" type="xsd:integer"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:integer" use="required" ></xsd:attribute>
+   	</xsd:complexType>
+    
+    <xsd:complexType name="Relation2EntitiesType">
+    	<xsd:complexContent>
+			<xsd:extension base="tns:RelationType">
+				<xsd:sequence>
+		   			<xsd:element name="entity2Id" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+				<xsd:attribute name="relationName" type="tns:Relation2EntitiesName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Relation3EntitiesType">
+    	<xsd:complexContent>
+			<xsd:extension base="tns:RelationType">
+				<xsd:sequence>
+					<xsd:element name="entity2Id" type="xsd:integer"></xsd:element>
+					<xsd:element name="entity3Id" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+				<xsd:attribute name="relationName" type="tns:Relation3EntitiesName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Relation2Entities1ThreatType">
+ 	    <xsd:complexContent>
+			<xsd:extension base="tns:RelationType">
+				<xsd:sequence>
+		   			<xsd:element name="entity2Id" type="xsd:integer"></xsd:element>
+		   			<xsd:element name="threatId" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+		    	<xsd:attribute name="relationName" type="tns:Relation2Entities1ThreatName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Relation1Entity1ThreatType">
+    	<xsd:complexContent>
+			<xsd:extension base="tns:RelationType">
+				<xsd:sequence>
+   					<xsd:element name="threatId" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+		    	<xsd:attribute name="relationName" type="tns:Relation1Entity1ThreatName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:simpleType name="Relation2EntitiesName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships among 2 entities -->
+    		<xsd:enumeration value="contain"/>
+    		<xsd:enumeration value="control"/>
+    		<xsd:enumeration value="depend"/>
+    		<xsd:enumeration value="check"/>
+    		<xsd:enumeration value="replicate"/>
+		</xsd:restriction>
+	</xsd:simpleType>    		
+    
+    <xsd:simpleType name="Relation3EntitiesName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships among 3 entities -->
+			<xsd:enumeration value="connect"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Relation2Entities1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships between 2 entities and 1 threat -->
+    		<xsd:enumeration value="protect"/>
+    		<xsd:enumeration value="monitor"/>
+    		<xsd:enumeration value="mend"/>
+		</xsd:restriction>
+	</xsd:simpleType>    		    		
+
+	<xsd:simpleType name="Relation1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships between 1 entity and 1 threat -->
+       		<xsd:enumeration value="spread"/>
+    		<xsd:enumeration value="potentiallyVulnerable"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="DerivedPropertyType">
+   	    <xsd:sequence>
+    		<xsd:element name="entityId" type="xsd:integer"></xsd:element>
+    		<xsd:element name="description" type="xsd:string" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:integer" use="required" ></xsd:attribute>
+   	</xsd:complexType>    		    		    
+	    
+    <xsd:complexType name="DerivedSecurityProp1EntityType">
+   		<xsd:complexContent>
+			<xsd:extension base="tns:DerivedPropertyType">
+				<xsd:attribute name="propertyName" type="tns:DerivedProperty1EntityName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+
+	<xsd:complexType name="DerivedSecurityProp1Entity1ThreatType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:DerivedPropertyType">
+				<xsd:sequence>
+		   			<xsd:element name="threatId" type="xsd:integer"></xsd:element>
+		   		</xsd:sequence>
+				<xsd:attribute name="propertyName" type="tns:DerivedProperty1Entity1ThreatName" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+    
+   	<xsd:simpleType name="DerivedProperty1EntityName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="canbeMalfunctioning"/>
+    		<xsd:enumeration value="canbeRestored"/>
+    		<xsd:enumeration value="canbeFixed"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+   	<xsd:simpleType name="DerivedProperty1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="canbeCompromised"/>
+    		<xsd:enumeration value="canbeVulnerable"/>
+    		<xsd:enumeration value="canbeDetected"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+</xsd:schema>

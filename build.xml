@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="TAMELESS" default="package-service" basedir=".">
+	<description>
+			Script for TAMELESS
+	</description>
+
+	<!-- The location of this assignment -->
+	<property name="TAMELESS.location" location="." />
+
+	<!-- The "BibReaderFactory" used for BibInfo and as data generator for tests 
+	<property name="BibInfo.BibReaderFactory" value="it.polito.dp2.BIB.Random.BibReaderFactoryImpl" /> -->
+
+	<!-- The default test class -->
+	<property name="test.class" value="it.polito.dp2.TAMELESS.sol.tests.TamTests" />
+	<!-- The default port for Tomcat -->
+	<property name="PORT" value="8080" />
+	<!-- The default URL to be used by clients -->
+	<property name="URL" value="http://localhost:${PORT}/TAMELESS/rest" />
+
+	<!-- The location for class files -->
+	<property name="build.dir" location="${TAMELESS.location}/build" />
+	<!-- The location for source files -->
+	<property name="src.dir" location="${TAMELESS.location}/src" />
+	<!-- The location for solutions 
+	<property name="sol3.dir" value="src/it/polito/dp2/BIB/sol3" /> -->
+	<!-- The location for jar files -->
+	<property name="lib.dir" location="${TAMELESS.location}/lib" />
+	<!-- The location for custom files -->
+	<property name="custom.dir" location="${TAMELESS.location}/custom" />
+	<!-- The location for xsd files -->
+	<property name="xsd.dir" location="${TAMELESS.location}/xsd" />
+	<!-- The location for documentation files -->
+	<property name="doc.dir" location="${TAMELESS.location}/doc" />
+	<!-- The location of the Neo4J web service -->
+	<property name="Neo4JURL" value="http://localhost:7474/db" />
+
+	<!-- The location for extra jar files -->
+	<property name="shared.location" location="/opt/dp2/shared" />
+	<property name="ext.lib.dir" location="${shared.location}/lib" />
+
+	<!-- The ant file to be provided for client and service compilation -->
+	<property name="sol.build.file" value="sol_build.xml" />
+	<property name="sol.build.filepath" location="${TAMELESS.location}/${sol.build.file}" />
+
+	<!-- Properties for generation of war file -->
+	<property name="gen.tomcat.service.dir" location="${TAMELESS.location}/target" />
+	<property name="webContent.dir" location="${TAMELESS.location}/WebContent" />
+	<property name="gen.war.dir" location="${TAMELESS.location}/war" />
+
+	<!-- The name to be given to the solution zip -->
+	<property name="sol.zip" value="tam.zip" />
+	
+	<!-- The default sourceFileName 
+	<property name="sourceFileName" location="${xsd.dir}/biblio.xml" /> -->
+
+	<!-- Java compiler settings -->
+	<property name="debug" value="true" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+
+	<!-- Import Ant Script for controlling Tomcat-->
+	<property name="service.name" value="TAMELESS" />
+	<property name="root.location" value="${TAMELESS.location}" />
+	<import file="tomcat-build.xml" />
+	
+	<!-- Import Ant Script for controlling Neo4j-->
+	<import file="neo4j-build.xml" />
+
+	<!-- The classpath that includes only the BIB.jar 
+	<path id="BIB.classpath">
+		<pathelement location="${lib.dir}/BIB.jar" />
+	</path> -->
+
+	<!-- The classpath to be used for running the tests -->
+	<path id="test.classpath">
+		<pathelement location="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${ext.lib.dir}">
+			<include name="*.jar" />
+			<exclude name="ant-*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${gen.tomcat.service.dir}" />
+	</target>
+
+	<!-- The target for compiling the BibInfo application 
+	<target name="buildBibInfo" depends="init">
+		<echo>Building BibInfo (if needed)...</echo>
+		<javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}" includeantruntime="false">
+			<src path="${src.dir}" />
+			<include name="it/polito/dp2/BIB/ass1/BibInfo.java" />
+			<classpath>
+				<path refid="BIB.classpath" />
+			</classpath>
+		</javac>
+		<echo>Done.</echo>
+	</target> -->
+
+	<!-- Target for running the BibInfo application 
+	<target name="BibInfo" depends="buildBibInfo" description="Run the sample application">
+		<java classname="it.polito.dp2.BIB.ass1.BibInfo" failonerror="true" fork="yes">
+			<sysproperty key="it.polito.dp2.BIB.Random.sourceFileName" value="${sourceFileName}" />
+			<sysproperty key="it.polito.dp2.BIB.BibReaderFactory" value="${BibInfo.BibReaderFactory}" />
+			<classpath>
+				<path refid="BIB.classpath" />
+				<pathelement location="${lib.dir}/BIBRandom.jar" />
+				<pathelement path="${build.dir}" />
+			</classpath>
+		</java>
+	</target> -->
+
+	<!-- Target for populating items 
+	<target name="populate-service"  description="Populate the service with data taken from the generator">
+		<java classname="it.polito.dp2.BIB.ass3.admClient.AdminClient" failonerror="true" fork="yes">
+			<sysproperty key="it.polito.dp2.BIB.Random.sourceFileName" value="${sourceFileName}" />
+			<sysproperty key="it.polito.dp2.BIB.BibReaderFactory" value="${BibInfo.BibReaderFactory}" />
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<path refid="BIB.classpath" />
+				<pathelement location="${lib.dir}/BIBRandom.jar" />
+				<fileset dir="${ext.lib.dir}">
+					<include name="*.jar" />
+					<exclude name="ant-*.jar"/>
+				</fileset>
+				<pathelement location="${lib.dir}/ass3.jar"/>
+			</classpath>
+		</java>
+	</target> -->
+
+	<!-- The targets for building the service and the client of the solution (calls solution script) -->
+	<target name="build-service" depends="init">
+		<ant antfile="${sol.build.filepath}" target="build-service">
+			<property name="basedir" value="${TAMELESS.location}" />
+		</ant>
+	</target>
+
+	<target name="build-client" depends="init">
+		<ant antfile="${sol.build.filepath}" target="build-client">
+			<property name="basedir" value="${TAMELESS.location}" />
+		</ant>
+	</target>
+
+	<!-- The target for packaging the service -->
+	<target name="package-service" depends="build-service">
+		<!-- copy web module resource files to temporary destination folder -->
+		<copy toDir="${gen.tomcat.service.dir}" overwrite="true">
+			<fileset dir="${webContent.dir}">
+			</fileset>
+		</copy>
+		
+		<!-- overwrite web.xml with the secured version -->
+		<copy tofile="${gen.tomcat.service.dir}/WEB-INF/web.xml" overwrite="true" file="${TAMELESS.location}/web.xml"/>
+		
+		<!-- copy class files to WEB-INF/classes directory -->
+		<copy toDir="${gen.tomcat.service.dir}/WEB-INF/classes" overwrite="true">
+			<fileset dir="${build.dir}">
+			</fileset>
+		</copy>
+
+		<!-- copy lib files to WEB-INF/lib directory -->
+		<copy toDir="${gen.tomcat.service.dir}/WEB-INF/lib" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+				<include name="*.p" />
+				<exclude name="ass*.jar" />
+			</fileset>
+		</copy>
+		<!-- make war archive -->
+		<jar destfile="${gen.war.dir}/${service.name}.war" basedir="${gen.tomcat.service.dir}" />
+	</target>
+
+
+
+	<!-- The target that runs the tests (it also deploys the web service) -->
+	<target name="run-tests" depends="deployWS" description="runs tests">
+		<echo>Running functional tests</echo>
+
+		<!-- Give time to service for initialization -->
+		<sleep seconds="5" />
+
+		<!-- Start real functional tests -->
+		<antcall target="runFuncTest.real">
+		</antcall>
+	</target>
+	
+	<!-- The target that runs the tests (it also deploys the web service) -->
+	<target name="run-tests-no-WS-deploy" description="runs tests">
+		<echo>Running functional tests</echo>
+
+		<!-- Give time to service for initialization
+		<sleep seconds="5" /> -->
+
+		<!-- Start real functional tests -->
+		<antcall target="runFuncTest.real">
+		</antcall>
+	</target>
+
+	<!-- Target runFuncTest.real NOT TO BE CALLED DIRECTLY -->
+	<target name="runFuncTest.real" depends="build-client" description="internal task, not to be called directly">
+		<echo>Running Junit tests...</echo>
+		<junit printsummary="yes" dir="." fork="yes" haltonfailure="no" showoutput="no" filtertrace="true" timeout="120000">
+			<jvmarg value="-Djava.awt.headless=true" />
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.URL" value="${URL}" />
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.PORT" value="${PORT}" />
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.ClientFactory" value="it.polito.dp2.TAMELESS.sol.client.ClientFactory" />
+			<formatter type="xml" usefile="true" />
+			<formatter type="plain" usefile="false" />
+			<test haltonfailure="no" failureproperty="test_failed" outfile="testout" name="${test.class}" 
+				methods="testCreateEntities, testCreateThreats, testCreateRelation2Entities, testCreateRelation3Entities, 
+				testCreateRelation2Entities1Threat, testCreateRelation1Entity1Threat, testCreateProperty1Entity1Threat,
+				testCreateProperty1Entity, testUpdateEntity, testUpdateThreat, testUpdateRelation2Entities, 
+				testUpdateRelation3Entities, testUpdateRelation2Entities1Threat, testUpdateRelation1Entity1Threat,
+				testUpdateProperty1Entity, testUpdateProperty1Entity1Threat, testCreateDerivedProperty1Entity, testCreateDerivedProperty1Entity1Threat" />
+			<classpath>
+				<path refid="test.classpath" />
+			</classpath>
+		<!-- testCreateEntities, testCreateThreats, testCreateRelation2Entities, testCreateRelation3Entities, 
+						testCreateRelation2Entities1Threat, testCreateRelation1Entity1Threat, testCreateProperty1Entity1Threat,
+						testCreateProperty1Entity, testUpdateEntity, testUpdateThreat, testUpdateRelation2Entities, 
+						testUpdateRelation3Entities, testUpdateRelation2Entities1Threat, testUpdateRelation1Entity1Threat,
+						testUpdateProperty1Entity, testUpdateProperty1Entity1Threat, testCreateDerivedProperty1Entity, testCreateDerivedProperty1Entity1Threat-->
+		</junit>
+		<fail if="test_failed" status="126" message="*** Junit tests: Some Tests FAILED ***" />
+		<echo>*** Junit tests: All Tests PASSED  ***</echo>
+	</target>
+
+	<!-- target for cleaning -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${gen.tomcat.service.dir}" />
+		<delete file="${gen.war.dir}/${service.name}.war" />
+	</target>
+
+	<!--target for building the final zip containing the solution 
+	<target name="make-zip" description="Make zip to be submitted">
+		<zip destfile="${sol.zip}" basedir="${TAMELESS.location}" includes="${sol.build.file} custom/**/* xsd/**/* doc/**/* WebContent/**/* ${sol3.dir}/**/*" />
+	</target> -->
+	
+	
+	<!-- The target that runs the client (it also deploys the web service) -->
+	<target name="run-client-example-webserver" depends="deployWS" description="runs client">
+		<echo>Running client and deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="false" />
+		<property name="safeExample" value="false" />
+		
+		<!-- Give time to service for initialization -->
+		<sleep seconds="5" />
+
+		<!-- Start real functional tests -->
+		<antcall target="runClient.real">
+		</antcall>
+	</target>
+	
+	<!-- The target that runs the client (it also deploys the web service) -->
+	<target name="run-client-example-safe" depends="deployWS" description="runs client">
+		<echo>Running client and deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="false" />
+		<property name="safeExample" value="true" />
+		
+		<!-- Give time to service for initialization -->
+		<sleep seconds="5" />
+
+		<!-- Start real functional tests -->
+		<antcall target="runClient.real">
+		</antcall>
+	</target>
+	
+	<!-- The target that runs the client (it does NOT deploy the web service) -->
+	<target name="run-client-no-WS-deploy-no-create-system" description="runs client">
+		<echo>Running client without deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="true" />
+		<property name="safeExample" value="false" />
+		
+		<!-- Give time to service for initialization 
+		<sleep seconds="5" /> -->
+
+		<!-- Start real functional tests -->
+		<antcall target="runClient.real">
+		</antcall>
+	</target>
+	
+	<!-- The target that runs the client (it does NOT deploy the web service) -->
+	<target name="run-client-no-WS-deploy-but-create-system" description="runs client">
+		<echo>Running client without deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="false" />
+		<property name="safeExample" value="false" />
+		
+		<!-- Give time to service for initialization 
+		<sleep seconds="5" /> -->
+
+		<!-- Start real functional tests -->
+		<antcall target="runClient.real">
+		</antcall>
+	</target>
+	
+	<!-- Target runClient.real NOT TO BE CALLED DIRECTLY -->
+	<target name="runClient.real" depends="build-client" description="internal task, not to be called directly">
+		<java classname="it.polito.dp2.TAMELESS.sol.client.ClientFactoryImpl" failonerror="true" fork="yes">
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.URL" value="${URL}" />
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.PORT" value="${PORT}" />
+			<sysproperty key="elemAlreadyCreated" value="${elemAlreadyCreated}" />
+			<sysproperty key="safeExample" value="${safeExample}" />
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<!-- <path refid="BIB.classpath" /> -->
+				<!-- <pathelement location="${lib.dir}/BIBRandom.jar" /> -->
+				<fileset dir="${ext.lib.dir}">
+					<include name="*.jar" />
+					<exclude name="ant-*.jar"/>
+				</fileset>
+				<!-- <pathelement location="${lib.dir}/ass3.jar"/> -->
+			</classpath>
+		</java>
+		
+	</target>
+	<!--<target name="stop-and-start-tomcat" depends="stop-tomcat, start-tomcat">
+		Give time to service for initialization  
+		<sleep seconds="5" /> 
+
+		 Start tomcat
+		<antcall target="start-tomcat">
+		</antcall>
+	</target>-->
+
+</project>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:system xmlns:tns="http://pad.polito.it/dp2/TAMELESS"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://pad.polito.it/dp2/TAMELESS system.xsd ">
+	
+	<entity id="1" type="cyber">
+		<name>website</name>
+	</entity>
+	<entity id="2" type="physical">
+		<name>air_conditioned</name>
+	</entity>
+	<entity id="3" type="physical">
+		<name>fanbox_airConditioned</name>
+	</entity>
+	<entity id="4" type="physical">
+		<name>servers</name>
+	</entity>
+	<entity id="5" type="human">
+		<name>attacker</name>
+	</entity>
+	<entity id="6" type="physical">
+		<name>biometricAuth</name>
+	</entity>
+	<entity id="7" type="physical">
+		<name>room</name>
+	</entity>
+	<entity id="8" type="physical">
+		<name>path</name>
+	</entity>
+	<entity id="9" type="physical">
+		<name>path2</name>
+	</entity>
+	<entity id="10" type="cyber">
+		<name>internet</name>
+	</entity>
+	<entity id="11" type="cyber">
+		<name>firewall</name>
+	</entity>
+	<entity id="12" type="cyber">
+		<name>antivirus</name>
+	</entity>
+	<entity id="13" type="cyber">
+		<name>antimalwer</name>
+	</entity>
+	<entity id="14" type="cyber">
+		<name>ids</name>
+	</entity>
+	<entity id="15" type="cyber">
+	<name>tcpConnection</name>
+	</entity>
+	
+	<threat id="1">
+		<name>dos</name>
+	</threat>
+	<threat id="2">
+		<name>virus</name>
+	</threat>
+	<threat id="3">
+		<name>malwer</name>
+	</threat>
+	<threat id="4">
+		<name>intrusion</name>
+	</threat>
+	<threat id="5">
+		<name>unauthorizedAccess</name>
+	</threat>
+	<threat id="6">
+		<name>physicalAttack</name>
+	</threat>
+	<threat id="7">
+		<name>maliciousPurpose</name>
+	</threat>
+
+	<relation2Entities id="1" relationName="contain"> <!-- servers contain website -->
+		<entity1Id>4</entity1Id> <!-- servers -->
+		<entity2Id>1</entity2Id> <!-- website -->
+	</relation2Entities>
+	
+	<relation2Entities id="2" relationName="contain">
+		<entity1Id>7</entity1Id> <!-- room -->
+		<entity2Id>4</entity2Id> <!-- servers -->
+	</relation2Entities>
+
+	<relation2Entities id="3" relationName="contain">
+		<entity1Id>7</entity1Id> <!-- room -->
+		<entity2Id>2</entity2Id> <!-- air_conditioned -->
+	</relation2Entities>
+	
+	<relation2Entities id="4" relationName="depend"> <!-- air_conditioned depend on fanbox_airConditioned -->
+		<entity1Id>2</entity1Id> <!-- air_conditioned -->
+		<entity2Id>3</entity2Id> <!-- fanbox_airConditioned -->
+	</relation2Entities>
+	
+	<relation2Entities id="5" relationName="depend">
+		<entity1Id>4</entity1Id> <!-- servers -->
+		<entity2Id>2</entity2Id> <!-- air_conditioned -->
+	</relation2Entities>
+	
+	<relation2Entities id="6" relationName="depend">
+		<entity1Id>1</entity1Id> <!-- website -->
+		<entity2Id>4</entity2Id> <!-- servers -->
+	</relation2Entities>
+
+	<relation3Entities id="7" relationName="connect"> <!-- tcpConnection connect internet to servers -->
+		<entity1Id>15</entity1Id> <!-- tcpConnection -->
+		<entity2Id>10</entity2Id> <!-- internet -->
+		<entity3Id>4</entity3Id> <!-- servers -->
+	</relation3Entities>
+	
+	<relation3Entities id="8" relationName="connect">
+		<entity1Id>8</entity1Id> <!-- path -->
+		<entity2Id>5</entity2Id> <!-- attacker -->
+		<entity3Id>3</entity3Id> <!-- fanbox_airConditioned -->
+	</relation3Entities>
+	
+	<relation3Entities id="9" relationName="connect">
+		<entity1Id>9</entity1Id> <!-- path2 -->
+		<entity2Id>5</entity2Id> <!-- attacker -->
+		<entity3Id>7</entity3Id> <!-- room -->
+	</relation3Entities>
+
+	<relation2Entities1Threat id="10" relationName="protect"> <!-- biometricAuth protect path2 from unauthorizedAccess -->
+		<entity1Id>6</entity1Id> <!-- biometricAuth -->
+		<entity2Id>9</entity2Id> <!-- path2 -->
+		<threatId>5</threatId> <!-- unauthorizedAccess -->
+	</relation2Entities1Threat>
+	
+	<relation2Entities1Threat id="11" relationName="protect"> 
+		<entity1Id>11</entity1Id> <!-- firewall -->
+		<entity2Id>15</entity2Id> <!-- tcpConnection -->
+		<threatId>1</threatId> <!-- dos -->
+	</relation2Entities1Threat>
+	
+	<relation2Entities1Threat id="12" relationName="protect"> 
+		<entity1Id>14</entity1Id> <!-- ids -->
+		<entity2Id>15</entity2Id> <!-- tcpConnection -->
+		<threatId>4</threatId> <!-- intrusion -->
+	</relation2Entities1Threat>
+
+	<relation2Entities1Threat id="13" relationName="protect"> 
+		<entity1Id>12</entity1Id> <!-- antivirus -->
+		<entity2Id>4</entity2Id> <!-- servers -->
+		<threatId>2</threatId> <!-- virus -->
+	</relation2Entities1Threat>
+	
+	<relation2Entities1Threat id="14" relationName="protect"> 
+		<entity1Id>13</entity1Id> <!-- antimalwer -->
+		<entity2Id>4</entity2Id> <!-- servers -->
+		<threatId>3</threatId> <!-- malwer -->
+	</relation2Entities1Threat>		
+		
+	<relation1Entity1Threat id="15" relationName="spread"> <!-- room spread physicalAttack-->
+		<entity1Id>7</entity1Id> <!-- room -->
+		<threatId>6</threatId> <!-- physicalAttack -->
+	</relation1Entity1Threat>
+	
+	<relation1Entity1Threat id="16" relationName="spread">
+		<entity1Id>5</entity1Id> <!-- attacker -->
+		<threatId>6</threatId> <!-- physicalAttack -->
+	</relation1Entity1Threat>
+	
+	<relation1Entity1Threat id="17" relationName="spread">
+		<entity1Id>10</entity1Id> <!-- internet -->
+		<threatId>1</threatId> <!-- dos -->
+	</relation1Entity1Threat>
+	
+	<relation1Entity1Threat id="18" relationName="spread">
+		<entity1Id>10</entity1Id> <!-- internet -->
+		<threatId>2</threatId> <!-- virus -->
+	</relation1Entity1Threat>
+	
+	<relation1Entity1Threat id="19" relationName="spread">
+		<entity1Id>10</entity1Id> <!-- internet -->
+		<threatId>4</threatId> <!-- intrusion -->
+	</relation1Entity1Threat>
+	
+	<relation1Entity1Threat id="20" relationName="spread">
+		<entity1Id>10</entity1Id> <!-- internet -->
+		<threatId>3</threatId> <!-- malwer -->
+	</relation1Entity1Threat>
+
+	<assumedProp1Entity1Threat id="1" propertyName="vulnerable"> <!-- servers are vulnerable of virus -->
+		<entityId>4</entityId> <!-- servers -->
+		<threatId>2</threatId> <!-- virus -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="2" propertyName="vulnerable">
+		<entityId>4</entityId> <!-- servers -->
+		<threatId>1</threatId> <!-- dos -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="3" propertyName="vulnerable">
+		<entityId>4</entityId> <!-- servers -->
+		<threatId>3</threatId> <!-- malwer -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="4" propertyName="vulnerable">
+		<entityId>1</entityId> <!-- website -->
+		<threatId>2</threatId> <!-- virus -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="5" propertyName="vulnerable">
+		<entityId>1</entityId> <!-- website -->
+		<threatId>1</threatId> <!-- dos -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="6" propertyName="vulnerable">
+		<entityId>1</entityId> <!-- website -->
+		<threatId>3</threatId> <!-- malwer -->
+	</assumedProp1Entity1Threat>
+	
+	
+	<assumedProp1Entity1Threat id="7" propertyName="vulnerable">
+		<entityId>2</entityId> <!-- air_conditioned -->
+		<threatId>6</threatId> <!-- physicalAttack -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="8" propertyName="vulnerable">
+		<entityId>3</entityId> <!-- fanbox_airConditioned -->
+		<threatId>6</threatId> <!-- physicalAttack -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="9" propertyName="compromised"> <!-- attacker is compromised by malicious purpose -->
+		<entityId>5</entityId> <!-- attacker -->
+		<threatId>7</threatId> <!-- maliciousPurpose -->
+	</assumedProp1Entity1Threat>
+	
+	<assumedProp1Entity1Threat id="10" propertyName="compromised">
+		<entityId>10</entityId> <!-- internet -->
+		<threatId>7</threatId> <!-- maliciousPurpose -->
+	</assumedProp1Entity1Threat>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="1">
+		<entityId>5</entityId>
+		<description>(attacker) can be Mulfunction because it can be Compromised</description>
+	</derivedProperty1Entity>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="2">
+		<entityId>10</entityId>
+		<description>(internet) can be Mulfuntion because it can be Compromised</description>
+	</derivedProperty1Entity>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="3">
+		<entityId>3</entityId>
+		<description>(fanbox_airConditioned) can be Mulfuntion because it can be Compromised</description>
+	</derivedProperty1Entity>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="4">
+		<entityId>2</entityId>
+		<description>(air_conditioned) can be Mulfuntion because depend on (fanbox_airConditioned)</description>
+	</derivedProperty1Entity>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="5">
+		<entityId>4</entityId>
+		<description>(servers) can be Mulfuntion because depend on (air_conditioned)</description>
+	</derivedProperty1Entity>
+	
+	<derivedProperty1Entity propertyName="canbeMalfunctioning" id="6">
+		<entityId>1</entityId>
+		<description>(website) can be Mulfuntion because depend on (servers)</description>
+	</derivedProperty1Entity>
+	
+	<derivedProp1Entity1Threat propertyName="canbeCompromised" id="7">
+		<entityId>5</entityId>
+		<description>(attacker) is Assumed Compromised by (maliciousPurpose)</description>
+		<threatId>7</threatId>
+	</derivedProp1Entity1Threat>
+	
+	<derivedProp1Entity1Threat propertyName="canbeCompromised" id="8">
+		<entityId>10</entityId>
+		<description>(internet) is Assumed Compromised by (maliciousPurpose)</description>
+		<threatId>7</threatId>
+	</derivedProp1Entity1Threat>
+	
+	<derivedProp1Entity1Threat propertyName="canbeCompromised" id="9">
+		<entityId>3</entityId> <!-- fanbox_airConditioned -->
+		<description>(fanbox_airConditioned) can be compromises through (attacker) by (physicalAttack)</description>
+		<threatId>6</threatId> <!-- physicalAttack -->
+	</derivedProp1Entity1Threat>
+	
+</tns:system>

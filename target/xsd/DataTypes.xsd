@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:complexType name="NodeType">
+		<xsd:sequence>
+			<xsd:element name="labels" type="xsd:anyURI" />
+			<xsd:element name="self" type="xsd:anyURI" />
+			<xsd:element ref="metadata" />
+			<xsd:element ref="data" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="metadata">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="id" type="xsd:integer"/>
+				<xsd:element name="labels" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="data">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string"/>
+				<xsd:element name="type" type="xsd:string" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	 <xsd:element name="CypherRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="statements" maxOccurs="unbounded">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="statements">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="statement" type="xsd:string"/>
+				<xsd:element name="resultDataContents" type="xsd:string" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	 <xsd:element name="CypherResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="results" maxOccurs="unbounded"/>
+				<xsd:element name="errors" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="code" type="xsd:string"/>
+							<xsd:element name="message" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="results">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="data" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="rest" type="NodeType" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="RelationshipType">
+		<xsd:sequence>
+			<xsd:element name="to" type="xsd:string"/>
+			<xsd:element name="type" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- <xsd:element name="relationshipResponses">
+		<xsd:complexType>
+			<xsd:sequence>		
+				<xsd:element name="relationshipResponse" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="end" type="xsd:anyURI" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>-->
+
+	<xsd:complexType  name="relationshipResponseType">
+		<xsd:sequence>
+			<xsd:element name="self" type="xsd:anyURI" />
+			<xsd:element name="end" type="xsd:anyURI" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- <xsd:element name="self" type="xsd:anyURI" /> -->
+	<!-- <xsd:element ref="relationshipResponse" maxOccurs="unbounded" />-->
+
+	<!-- <xsd:element name="traverseRequestBody">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="order" type="xsd:string"/>
+				<xsd:element name="max_depth" type="xsd:int" />
+				<xsd:element name="relationships" >
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="direction" type="xsd:string"/>
+							<xsd:element name="type" type="xsd:string" />			
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>-->
+	
+	<xsd:element name="UniquenessBody">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="property_keys" type="xsd:string" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

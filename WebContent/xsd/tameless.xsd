@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="system">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="entities" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="threats" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="relationships" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="properties" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="results" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="self" type="xsd:anyURI" minOccurs="0"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="entities">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="entity" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="entity">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="name" type="xsd:string"/>
+				<xsd:element name="relations" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="properties" type="xsd:anyURI" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" type="EntityNature" use="required" ></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+	<!-- 
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Actually a copy of system.xsd, vedere se posso importarlo in qualche modo 
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	-->
+	<xsd:simpleType name="EntityNature">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="human"/>
+    		<xsd:enumeration value="cyber"/>
+    		<xsd:enumeration value="physical"/>
+		</xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="Relation2EntitiesName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships among 2 entities -->
+    		<xsd:enumeration value="contain"/>
+    		<xsd:enumeration value="control"/>
+    		<xsd:enumeration value="depend"/>
+    		<xsd:enumeration value="check"/>
+    		<xsd:enumeration value="replicate"/>
+		</xsd:restriction>
+	</xsd:simpleType>  
+	
+	<xsd:simpleType name="Relation3EntitiesName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships among 3 entities -->
+			<xsd:enumeration value="connect"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Relation2Entities1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships between 2 entities and 1 threat -->
+    		<xsd:enumeration value="protect"/>
+    		<xsd:enumeration value="monitor"/>
+    		<xsd:enumeration value="mend"/>
+		</xsd:restriction>
+	</xsd:simpleType>    		    		
+
+	<xsd:simpleType name="Relation1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<!-- Relationships between 1 entity and 1 threat -->
+       		<xsd:enumeration value="spread"/>
+    		<xsd:enumeration value="potentiallyVulnerable"/>			
+		</xsd:restriction>
+	</xsd:simpleType>   
+	
+	<xsd:simpleType name="BasicProperty1EntityName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="malfunctioned"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+   	<xsd:simpleType name="BasicProperty1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="compromised"/>
+    		<xsd:enumeration value="vulnerable"/>
+		</xsd:restriction>    	
+    </xsd:simpleType> 		    		    
+	    
+   	<xsd:simpleType name="DerivedProperty1EntityName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="canbeMalfunctioning"/>
+    		<xsd:enumeration value="canbeRestored"/>
+    		<xsd:enumeration value="canbeFixed"/>
+		</xsd:restriction>    	
+    </xsd:simpleType>
+    
+   	<xsd:simpleType name="DerivedProperty1Entity1ThreatName">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="canbeCompromised"/>
+    		<xsd:enumeration value="canbeVulnerable"/>
+    		<xsd:enumeration value="canbeDetected"/>
+		</xsd:restriction>    	
+    </xsd:simpleType> 	
+	<!-- 
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		FINE COPIA 
+		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	-->   
+
+
+	<xsd:element name="threats">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="threat" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="threat">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="name" type="xsd:string"/>
+				<xsd:element name="relations" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="properties" type="xsd:anyURI" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relationships">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="relations2Entities" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="relations3Entities" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="relations2Entities1Threat" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="relations1Entity1Threat" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="self" type="xsd:anyURI" minOccurs="0"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relations2Entities">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="relation2Entities" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="relation2Entities">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entity1Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="entity2Id" type="xsd:anyURI"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="relationName" type="Relation2EntitiesName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relations3Entities">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="relation3Entities" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relation3Entities">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entity1Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="entity2Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="entity3Id" type="xsd:anyURI"></xsd:element>	
+			</xsd:sequence>
+	    	<xsd:attribute name="relationName" type="Relation3EntitiesName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+		<xsd:element name="relations2Entities1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="relation2Entities1Threat" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relation2Entities1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entity1Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="entity2Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="threatId" type="xsd:anyURI"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="relationName" type="Relation2Entities1ThreatName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relations1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="relation1Entity1Threat" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="relation1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entity1Id" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="threatId" type="xsd:anyURI"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="relationName" type="Relation1Entity1ThreatName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="properties">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="properties1Entity" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="properties1Entity1Threat" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="self" type="xsd:anyURI" minOccurs="0"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="properties1Entity">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="property1Entity" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="property1Entity">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entityId" type="xsd:anyURI"></xsd:element>
+			</xsd:sequence>
+    		<xsd:attribute name="propertyName" type="BasicProperty1EntityName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="properties1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="property1Entity1Threat" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="property1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entityId" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="threatId" type="xsd:anyURI"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="propertyName" type="BasicProperty1Entity1ThreatName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="results">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="canbeCompromised" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="canbeMalfunctioning" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="canbeVulnerable" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="canbeDetected" type="xsd:anyURI"></xsd:element>
+   			    <xsd:element name="canbeRestored" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="canbeFixed" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="self" type="xsd:anyURI" minOccurs="0"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="derivedProperties1Entity">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="derivedProperty1Entity" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="derivedProperty1Entity">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entityId" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="description" type="xsd:string"></xsd:element>
+			</xsd:sequence>
+    		<xsd:attribute name="propertyName" type="DerivedProperty1EntityName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="derivedProperties1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="derivedProperty1Entity1Threat" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="derivedProperty1Entity1Threat">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	   			<xsd:element name="entityId" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="threatId" type="xsd:anyURI"></xsd:element>
+	   			<xsd:element name="description" type="xsd:string"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="propertyName" type="DerivedProperty1Entity1ThreatName" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+			
+</xsd:schema>
+
+<!-- <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name="system">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="items" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="journals" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="articles" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="books" type="xsd:anyURI"></xsd:element>
+			    <xsd:element name="self" type="xsd:anyURI" minOccurs="0"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+<xsd:element name="items">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="item" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="item">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="author" type="xsd:string" maxOccurs="unbounded" minOccurs="1"/>
+				<xsd:element name="title" type="xsd:string"/>
+				<xsd:element name="subtitle" type="xsd:string" minOccurs="0"/>
+				<xsd:choice>
+					<xsd:element name="article" type="ArticleType"/>
+					<xsd:element name="book" type="BookType" />
+				</xsd:choice>
+				<xsd:element name="citedBy" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="citations" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="targets" type="xsd:anyURI" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="ArticleType">
+		<xsd:attribute name="journal" type="ISSNCode" use="required"/>
+		<xsd:attribute name="volume" type="xsd:gYear" use="required"/>
+		<xsd:attribute name="number" type="xsd:integer" use="required"/>
+	</xsd:complexType>
+	
+	<xsd:element name="citations">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="citation" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="citation">
+	    <xsd:complexType>
+	       <xsd:sequence>
+	          <xsd:element name="from" type="xsd:anyURI"/>
+	          <xsd:element name="to" type="xsd:anyURI"/>
+	          <xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+	       </xsd:sequence>
+	    </xsd:complexType>
+	</xsd:element>
+		
+	<xsd:complexType name="BookType">
+		<xsd:sequence>
+			<xsd:element name="publisher" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:attribute name="ISBN" type="ISBNCode" use="required" />
+		<xsd:attribute name="year" type="xsd:gYear" use="required"/>
+	</xsd:complexType>
+		
+	<xsd:element name="journals">
+		<xsd:complexType>
+			<xsd:sequence>
+			    <xsd:element name="totalPages" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="page" type="xsd:positiveInteger"></xsd:element>
+			    <xsd:element name="next" type="xsd:anyURI" minOccurs="0"></xsd:element>
+				<xsd:element ref="journal" minOccurs="0" maxOccurs="20"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="journal">
+		<xsd:complexType>
+			<xsd:sequence>
+	            <xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="title" type="xsd:string"/>
+				<xsd:element name="publisher" type="xsd:string"/>
+				<xsd:element name="volume" type="xsd:anyURI" maxOccurs="unbounded" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="ISSN" type="ISSNCode" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="volume">
+	   <xsd:complexType>
+	      <xsd:sequence>
+              <xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+              <xsd:element name="journal" type="xsd:anyURI" minOccurs="0"/>
+	          <xsd:element ref="number" minOccurs="0" maxOccurs="unbounded"/>
+	      </xsd:sequence>
+	      <xsd:attribute name="year" type="xsd:gYear" use="required"/>
+	   </xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="number">
+	   <xsd:complexType>
+	   	   <xsd:sequence>
+                <xsd:element name="self" type="xsd:anyURI" minOccurs="0"/>
+                <xsd:element name="journal" type="xsd:anyURI" minOccurs="0"/>
+                <xsd:element name="volume" type="xsd:anyURI" minOccurs="0"/>
+	   	   	  	<xsd:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
+	   	   </xsd:sequence>
+	       <xsd:attribute name="number" type="xsd:integer" use="required"/>
+	   </xsd:complexType>
+	</xsd:element>
+	
+	  
+	<xsd:simpleType name="ISBNCode"> 
+	  <xsd:restriction base="xsd:string"> 
+	   <xsd:pattern value="[0-9]{13}"/>
+	   <xsd:pattern value="[0-9]{9}([0-9]|X)"/>
+	  </xsd:restriction> 
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="ISSNCode"> 
+	  <xsd:restriction base="xsd:string"> 
+	   <xsd:pattern value="[0-9]{4}-[0-9]{3}([0-9]|X)"/>
+	  </xsd:restriction> 
+	</xsd:simpleType>
+
+
+</xsd:schema>
+
+-->		

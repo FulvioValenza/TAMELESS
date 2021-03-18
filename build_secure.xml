@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="TAMELESS secured version" default="package-service" basedir=".">
+	<description>
+			Script for TAMELESS - secured version
+	</description>
+
+	<!-- The default port for Tomcat -->
+	<property name="SPORT" value="8443" />
+	<!-- The default URL to be used by clients -->
+	<property name="SURL" value="https://localhost:${SPORT}/TAMELESS/rest" />
+
+	<!-- Import original Ant Script -->
+	<import file="build.xml" />
+	
+	<property name="keystore" location="${TAMELESS.location}/.keystore"/>
+	<!-- <property name="keystore" location="${user.home}/.keystore"/> -->
+	<property name="password" value="changeit"/>
+
+	<!-- The target that runs the client (it also deploys the web service) -->
+	<target name="run-secured-client-example-webserver" depends="deployWS" description="runs client">
+		<echo>Running client and deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="false" />
+		<property name="safeExample" value="false" />
+		
+		<!-- Give time to service for initialization -->
+		<sleep seconds="5" />
+
+		<!-- Start real functional tests -->
+		<antcall target="runSecuredClient.real">
+		</antcall>
+	</target>
+	
+	<!-- The target that runs the client (it also deploys the web service) -->
+	<target name="run-secured-client-example-safe" depends="deployWS" description="runs client">
+		<echo>Running client and deploying web service</echo>
+
+		<property name="elemAlreadyCreated" value="false" />
+		<property name="safeExample" value="true" />
+		
+		<!-- Give time to service for initialization -->
+		<sleep seconds="5" />
+
+		<!-- Start real functional tests -->
+		<antcall target="runSecuredClient.real">
+		</antcall>
+	</target>
+	
+	<!-- Target for running the secured version of the client application -->
+	<target name="runSecuredClient.real" depends="build-client" description="Run the secured version of the client">
+		<java classname="it.polito.dp2.TAMELESS.sol.client.ClientFactoryImplSecured" failonerror="true" fork="yes">
+			<!-- <sysproperty key="it.polito.dp2.BIB.Random.sourceFileName" value="${sourceFileName}" />
+			<sysproperty key="it.polito.dp2.BIB.BibReaderFactory" value="${BibInfo.BibReaderFactory}" /> -->
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.URL " value="${SURL}" />
+			<sysproperty key="it.polito.dp2.TAMELESS.ass.PORT" value="${SPORT}"/>
+			<sysproperty key="elemAlreadyCreated" value="${elemAlreadyCreated}" />
+			<sysproperty key="safeExample" value="${safeExample}" />
+		  	<jvmarg value="-Djavax.net.ssl.trustStore=${keystore}"/>
+		  	<jvmarg value="-Djavax.net.ssl.trustStorePassword=${password}"/>			
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<!-- <path refid="BIB.classpath" /> -->
+				<!-- <pathelement location="${lib.dir}/BIBRandom.jar" /> -->
+				<fileset dir="${ext.lib.dir}">
+					<include name="*.jar" />
+					<exclude name="ant-*.jar"/>
+				</fileset>
+				<!-- <pathelement location="${lib.dir}/ass3.jar"/> -->
+			</classpath>
+		</java>
+	</target>
+	
+	<!-- The target for packaging the service - secured version -->
+	<target name="package-service" depends="build-service">
+		<!-- copy web module resource files to temporary destination folder -->
+		<copy toDir="${gen.tomcat.service.dir}" overwrite="true">
+			<fileset dir="${webContent.dir}">
+			</fileset>
+		</copy>
+		
+		<!-- overwrite web.xml with the secured version -->
+		<copy tofile="${gen.tomcat.service.dir}/WEB-INF/web.xml" overwrite="true" file="${TAMELESS.location}/secured_web.xml"/>
+		
+		<!-- copy class files to WEB-INF/classes directory -->
+		<copy toDir="${gen.tomcat.service.dir}/WEB-INF/classes" overwrite="true">
+			<fileset dir="${build.dir}">
+			</fileset>
+		</copy>
+
+		<!-- copy lib files to WEB-INF/lib directory -->
+		<copy toDir="${gen.tomcat.service.dir}/WEB-INF/lib" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+				<include name="*.p" />
+				<exclude name="ass*.jar" />
+			</fileset>
+		</copy>
+		<!-- make war archive -->
+		<jar destfile="${gen.war.dir}/${service.name}.war" basedir="${gen.tomcat.service.dir}" />
+	</target>
+</project>

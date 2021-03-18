@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="build-service" name="TAMELESS">
+	<description>
+			Script for TAMELESS solution
+	</description>
+	<property name="basedir" location="." />
+	<property name="PORT" value="8080"/>
+	<property name="gen.dir" location="${basedir}/gen-src" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="TAMELESS.location" location="." />
+	<property name="src.dir" location="${TAMELESS.location}/src" />
+	<property name="web.dir" location="${basedir}/WebContent" />
+	<property name="web.schema.dir" location="${web.dir}/xsd" />
+	<property name="web.lib.dir" location="${web.dir}/WEB-INF/lib" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+	<property name="war.sol.dir" location="${basedir}/war" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="shared.location" location="/opt/dp2/shared"/>
+	<property name="ext.lib.dir" location="${shared.location}/lib" />
+
+	<property name="WADL-TAM" value="http://localhost:${PORT}/TAMELESS/rest/application.wadl"/>
+
+	<!-- The classpath to be used for compilation of the solution -->
+	<path id="sol.classpath">
+		<pathelement location="${ext.lib.dir}/javax.ws.rs-api-2.0.1.jar"/>
+		<pathelement location="${ext.lib.dir}/jersey-client-1.19.1.jar"/>
+		<pathelement location="${ext.lib.dir}/jersey-core-1.19.1.jar"/>
+		<pathelement location="${ext.lib.dir}/jpl.jar"/>
+		<fileset dir="${TAMELESS.location}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- The definition of the task for wadl compilation -->
+	<taskdef name="wjc" classname="org.jvnet.ws.wadl2java.WJCTask">
+		<classpath>
+			<fileset dir="${ext.lib.dir}" includes="*.jar" />
+		</classpath>
+	</taskdef>
+
+	<!-- Initialization Target	-->
+	<target name="init">
+		<mkdir dir="${gen.dir}" />
+	</target>
+
+	<!-- Target that cleans generated files	-->
+	<target name="clean-gen" description="Clean generated files and class files">
+		<delete dir="${gen.dir}" />
+	</target>
+
+	<!-- Target that builds the service	-->
+	<target name="build-service" depends="init, generate-service-artifacts">
+		<echo>Building the TamelessService ...</echo>
+		<javac destdir="${build.dir}" debug="${debug}" 
+				debuglevel="${debuglevel}" source="${source}"
+				target="${target}" includeantruntime="false" 
+				encoding="ISO-8859-1">
+			<src path="${src.dir}"/>
+			<src path="${gen.dir}"/>
+			<include name="it/polito/dp2/TAMELESS/sol/**/*" />
+			<exclude name = "it/polito/dp2/TAMELESS/sol/client/**" />
+			<classpath>
+				<path refid="sol.classpath"/>
+			</classpath>
+		</javac>
+		<echo>Done.</echo>
+	</target>
+
+	<!-- Target to generate artifacts for server -->
+	<target name="generate-service-artifacts" depends="init" description="generate artifacts for REST service">
+		<exec executable="xjc" failonerror="true">
+			<arg value="-d" />
+			<arg value="${gen.dir}" />
+			<arg value="-p" />
+			<arg value="it.polito.dp2.TAMELESS.sol.service.jaxb" />
+			<arg value="${web.schema.dir}/tameless.xsd" />
+		</exec>
+		<exec executable="xjc" failonerror="true">
+			<arg value="-d" />
+			<arg value="${gen.dir}" />
+			<arg value="-p" />
+			<arg value="it.polito.dp2.TAMELESS.sol.neo4j.jaxb" />
+			<arg value="${web.schema.dir}/DataTypes.xsd" />
+		</exec>
+		<touch file="${gen.dir}/.flagfile" />
+	</target>
+
+	<!-- Target that builds the client -->
+	<target name="build-client" depends="init,generate-artifacts-client" description="Build your solution">
+		<echo>Building the submitted solution (if needed)...</echo>
+		<javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}" includeantruntime="false" encoding="ISO-8859-1">
+			<src path="${src.dir}"/>
+			<src path="${gen.dir}"/>
+			<include name="it/polito/dp2/TAMELESS/sol/client/**" />
+			<!--<include name="it/polito/dp2/BIB/sol1/**/*" />-->
+			<classpath>
+				<path refid="sol.classpath"/>
+			</classpath>
+		</javac>
+		<echo>Done.</echo>
+	</target>
+
+	<!-- Target to generate artifacts for client (from wadl) -->
+	<target name="generate-artifacts-client" >
+		<mkdir dir="${gen.dir}" />
+		<echo message="Compiling the WADL descriptions... ${WADL-TAM}" />
+		<wjc target="${gen.dir}" autoSchemaPackage="false" package="it.polito.dp2.TAMELESS.sol.client" description="${WADL-TAM}">
+			<produces dir="${gen.dir}/it/polito/dp2/TAMELESS/sol.client" includes="*.java" />
+			<depends dir="${TAMELESS.location}" includes="build.xml"/>
+			<customizations dir="." includes="binding.xjc"/>
+		</wjc>
+		<touch file="${gen.dir}/.flagfile" />
+	</target>
+</project>
